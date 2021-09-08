@@ -43,9 +43,11 @@ export default function TopBar() {
 
             </Grid>
             <Grid item>
-              <Typography>
-                Recipes
-              </Typography>
+              <Link to="/meal">
+                <Typography>
+                  Meals
+                </Typography>
+              </Link>
             </Grid>
             <Grid item>
               <Typography>

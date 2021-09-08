@@ -6,6 +6,7 @@ import history from './history'
 //Components
 import Home from './components/Home'
 import Ingredient from './components/Ingredient'
+import Meal from './components/Meal'
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/ingredient" component={Ingredient} />
+            <Route path="/meal" component={Meal} />
           </Switch>
         </div>
       </Router>
