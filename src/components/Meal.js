@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
+import Modal from '@material-ui/core/Modal';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
@@ -24,6 +25,8 @@ export default function Meal() {
   const [PreviewStyle, setPreviewStyle] = useState(false)
   const [website, setWebsite] = useState()
 
+  const [open, setOpen] = useState(false)
+
   const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -37,7 +40,7 @@ export default function Meal() {
       },
     },
     tableIngredients: {
-      width: '500px',
+      width: '475px',
       height: '200px'
     },
     menu: {
@@ -47,6 +50,18 @@ export default function Meal() {
     mealForm: {
       position: "relative",
       left: "5%",
+    },
+    createMealFormModal: {
+
+    },
+    createMealFormElements: {
+      backgroundColor: 'white',
+      position: "absolute",
+      left: "35%",
+      top: "20%",
+      height: "700px",
+      width: "500px",
+      padding: '10px'
     },
     mealImagePreview: {
       height: "100px",
@@ -108,8 +123,12 @@ export default function Meal() {
     setWebsite(event.target.value)
   }
 
+  const createMealOpen = () => {
+    setOpen(true)
+  }
+
   const addMeal = () => {
-    let meal = { name, user: "test", recipes: ingredients, website, }
+    let meal = { name, user: "DEV", recipes: ingredients, website, }
     const mealJSON = JSON.stringify(meal);
     console.log("Meal", meal)
     let formData = new FormData()
@@ -143,88 +162,97 @@ export default function Meal() {
   const classes = useStyles();
   return (
     <div>
-      <Grid container direction="row" className={classes.mealForm}>
-        <Grid item>
-          <Grid container direction="column" justifyContent="center" alignItems="center" >
+      <Modal
+        open={open}
+        className={classes.createMealFormModal}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        <Grid container className={classes.createMealFormElements} direction="column" >
+          <Grid item>
+            <h2 className={classes.taskFormTitle} >Add Meal</h2>
+          </Grid>
+          <Grid item>
             <Grid item>
-              <h2 className={classes.taskFormTitle} >Add Meal</h2>
+              <img id="preview" src={mealPreview} alt="" className={PreviewStyle ? classes.mealImagePreview : ""} />
+              <input type="file" id="myFile" name="name" accept="image/png" onChange={handleMealImage} />
             </Grid>
-            <Grid item>
+            <Grid container direction="row" spacing={3}>
               <Grid item>
-                <img id="preview" src={mealPreview} alt="" className={PreviewStyle ? classes.mealImagePreview : ""} />
-                <input type="file" id="myFile" name="name" accept="image/png" onChange={handleMealImage} />
+                <TextField
+                  id="standard-basic"
+                  required
+                  value={name}
+                  name="MealName"
+                  label="Meal Name"
+                  autoComplete="off"
+                  InputProps={{ className: classes.textForm }}
+                  InputLabelProps={{ className: classes.textFont }}
+                  onChange={handleMeal}
+                />
               </Grid>
-              <Grid container direction="row" spacing={3}>
-                <Grid item>
-                  <TextField
-                    id="standard-basic"
-                    required
-                    value={name}
-                    name="MealName"
-                    label="Meal Name"
-                    autoComplete="off"
-                    InputProps={{ className: classes.textForm }}
-                    InputLabelProps={{ className: classes.textFont }}
-                    onChange={handleMeal}
-                  />
-                </Grid>
-                <Grid item>
-                  <TextField
-                    id="standard-basic"
-                    value={website}
-                    name="Website"
-                    label="Website"
-                    autoComplete="off"
-                    InputProps={{ className: classes.textForm }}
-                    InputLabelProps={{ className: classes.textFont }}
-                    onChange={handleWebsite}
-                  />
-                </Grid>
+              <Grid item>
+                <TextField
+                  id="standard-basic"
+                  value={website}
+                  name="Website"
+                  label="Website"
+                  autoComplete="off"
+                  InputProps={{ className: classes.textForm }}
+                  InputLabelProps={{ className: classes.textFont }}
+                  onChange={handleWebsite}
+                />
               </Grid>
-            </Grid>
-            <Grid item>
-              <Grid container direction="row" spacing={3}>
-                <Grid item xs={12} margin="10">
-                  <Button variant="contained" color="primary" onClick={addMeal} >Add Meal</Button>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item>
-              <TableContainer className={classes.tableIngredients}>
-                <Typography variant="h6" id="tableTitle" component="div">
-                  Current Meal Ingredients
-                </Typography>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <StyledTableCell align="left"></StyledTableCell>
-                      <StyledTableCell align="left">Ingredient</StyledTableCell>
-                      <StyledTableCell>Quantity</StyledTableCell>
-                      <StyledTableCell align="left">Units</StyledTableCell>
-                      <StyledTableCell align="left"></StyledTableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {ingredients === null ?
-                      <div></div> :
-                      ingredients.map(ingredient => {
-                        return (
-                          mealIngredientList(ingredient)
-                        )
-                      })
-                    }
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Grid>
-            <Grid items>
-              <IngredientSearch addIngredient={addIngredient} type="meal" />
             </Grid>
           </Grid>
+          <Grid item>
+            <Grid container direction="row" spacing={3}>
+              <Grid item xs={12} margin="10">
+                <Button variant="contained" color="primary" onClick={addMeal} >Add Meal</Button>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item>
+            <TableContainer className={classes.tableIngredients}>
+              <Typography variant="h6" id="tableTitle" component="div">
+                Current Meal Ingredients
+              </Typography>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell align="left"></StyledTableCell>
+                    <StyledTableCell align="left">Ingredient</StyledTableCell>
+                    <StyledTableCell>Quantity</StyledTableCell>
+                    <StyledTableCell align="left">Units</StyledTableCell>
+                    <StyledTableCell align="left"></StyledTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {ingredients === null ?
+                    <div></div> :
+                    ingredients.map(ingredient => {
+                      return (
+                        mealIngredientList(ingredient)
+                      )
+                    })
+                  }
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Grid>
+          <Grid items>
+            <IngredientSearch addIngredient={addIngredient} type="meal" />
+          </Grid>
         </Grid>
+      </Modal>
+      <Grid container direction="row" className={classes.mealForm}>
+
         <Grid item>
           Meal Search
           <MealSearch />
+        </Grid>
+        <Grid item>
+          <Button onClick={createMealOpen}>Create Meal</Button>
         </Grid>
       </Grid>
     </div>

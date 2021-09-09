@@ -91,13 +91,14 @@ export default function IngredientSearch(props) {
     },
 
     tableIngredients: {
-      width: '500px'
+      width: '475px'
     },
   }));
 
   const addToMeal = (selecteds3Key, selectedIngredient) => {
     let ingredient = { name: selectedIngredient.name, amount, unit, ingredientId: selectedIngredient.id, image: selecteds3Key }
     setSearchIngredient("")
+    setAmount("")
     setIngredientQuery([])
     props.addIngredient(ingredient)
     handleClose()
