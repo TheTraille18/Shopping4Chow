@@ -91,7 +91,8 @@ export default function IngredientSearch(props) {
     },
 
     tableIngredients: {
-      width: '475px'
+      width: '475px',
+      height: '150px'
     },
   }));
 
