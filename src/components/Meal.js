@@ -40,7 +40,7 @@ export default function Meal() {
       },
     },
     tableIngredients: {
-      width: '475px',
+      width: '675px',
       height: '200px'
     },
     menu: {
@@ -51,6 +51,11 @@ export default function Meal() {
       position: "relative",
       left: "5%",
     },
+    mealFormTitle: {
+      position: "relative",
+      width: '405px',
+      left: '30%'
+    },
     createMealFormModal: {
 
     },
@@ -58,9 +63,9 @@ export default function Meal() {
       backgroundColor: 'white',
       position: "absolute",
       left: "35%",
-      top: "20%",
-      height: "700px",
-      width: "500px",
+      top: "10%",
+      height: "800px",
+      width: "700px",
       padding: '10px'
     },
     mealImagePreview: {
@@ -71,6 +76,10 @@ export default function Meal() {
       height: "50px",
       width: "50px",
     },
+    closeButton: {
+      position: 'relative',
+      top: '70px'
+    }
   }));
 
   const addIngredient = (ingredient) => {
@@ -183,40 +192,41 @@ export default function Meal() {
       >
         <Grid container className={classes.createMealFormElements} direction="column" >
           <Grid item>
-            <h2 className={classes.taskFormTitle} >Add Meal</h2>
+            <Typography className={classes.mealFormTitle} variant="h3" id="tableTitle" component="div">
+              Create Meal
+            </Typography>
           </Grid>
           <Grid item>
             <Grid item>
               <img id="preview" src={mealPreview} alt="" className={PreviewStyle ? classes.mealImagePreview : ""} />
               <input type="file" id="myFile" name="name" accept="image/png" onChange={handleMealImage} />
             </Grid>
-            <Grid container direction="row" spacing={3}>
-              <Grid item>
-                <TextField
-                  id="standard-basic"
-                  required
-                  value={name}
-                  name="MealName"
-                  label="Meal Name"
-                  autoComplete="off"
-                  InputProps={{ className: classes.textForm }}
-                  InputLabelProps={{ className: classes.textFont }}
-                  onChange={handleMeal}
-                />
-              </Grid>
-              <Grid item>
-                <TextField
-                  id="standard-basic"
-                  value={website}
-                  name="Website"
-                  label="Website"
-                  autoComplete="off"
-                  InputProps={{ className: classes.textForm }}
-                  InputLabelProps={{ className: classes.textFont }}
-                  onChange={handleWebsite}
-                />
-              </Grid>
+            <Grid item>
+              <TextField
+                id="standard-basic"
+                required
+                value={name}
+                name="MealName"
+                label="Meal Name"
+                autoComplete="off"
+                InputProps={{ className: classes.textForm }}
+                InputLabelProps={{ className: classes.textFont }}
+                onChange={handleMeal}
+              />
             </Grid>
+            <Grid item>
+              <TextField
+                id="standard-basic"
+                value={website}
+                name="Website"
+                label="Website"
+                autoComplete="off"
+                InputProps={{ className: classes.textForm }}
+                InputLabelProps={{ className: classes.textFont }}
+                onChange={handleWebsite}
+              />
+            </Grid>
+
           </Grid>
           <Grid item>
             <Grid container direction="row" spacing={3}>
@@ -257,7 +267,7 @@ export default function Meal() {
             <IngredientSearch addIngredient={addIngredient} type="meal" />
           </Grid>
           <Grid item>
-            <Button onClick={() => createMealOpen(false)}>Close</Button>
+            <Button className={classes.closeButton} variant="contained" color="secondary" onClick={() => createMealOpen(false)}>Close</Button>
           </Grid>
         </Grid>
       </Modal>

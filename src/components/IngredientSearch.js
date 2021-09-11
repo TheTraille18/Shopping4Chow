@@ -91,8 +91,8 @@ export default function IngredientSearch(props) {
     },
 
     tableIngredients: {
-      width: '475px',
-      height: '150px'
+      width: '675px',
+      height: '200px'
     },
   }));
 
@@ -299,10 +299,10 @@ export default function IngredientSearch(props) {
           <Button>Search</Button>
         </Grid>
         <Grid item>
+          <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
+            Available Ingredients
+          </Typography>
           <TableContainer className={classes.tableIngredients}>
-            <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-              Available Ingredients
-            </Typography>
             <Table>
               <TableHead>
                 <TableRow>
