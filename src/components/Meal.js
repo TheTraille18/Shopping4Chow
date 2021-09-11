@@ -123,8 +123,8 @@ export default function Meal() {
     setWebsite(event.target.value)
   }
 
-  const createMealOpen = () => {
-    setOpen(true)
+  const createMealOpen = (formOpen) => {
+    setOpen(formOpen)
   }
 
   const addMeal = () => {
@@ -143,10 +143,22 @@ export default function Meal() {
       url: `${JAVA_API_URL}/addmeal`,
     })
       .then(res => {
-        console.log(res)
+        alert("Meal Added")
+
+        //Reset form properties
+        setName("")
+        setIngredients([])
+        setMealFile("")
+        setMealPreview()
+        setPreviewStyle(false)
+        setWebsite()
+
+        //Close Form
+        setOpen(false)
+
       })
       .catch(err => {
-        console.log(err)
+        alert(err)
       })
     // axios.post(`${JAVA_API_URL}/addmeal`, meal)
     //   .then(res => {
@@ -164,6 +176,7 @@ export default function Meal() {
     <div>
       <Modal
         open={open}
+        close={!open}
         className={classes.createMealFormModal}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
@@ -243,16 +256,20 @@ export default function Meal() {
           <Grid items>
             <IngredientSearch addIngredient={addIngredient} type="meal" />
           </Grid>
+          <Grid item>
+            <Button onClick={() => createMealOpen(false)}>Close</Button>
+          </Grid>
         </Grid>
       </Modal>
-      <Grid container direction="row" className={classes.mealForm}>
-
+      <Grid container direction="row" id="MealSearch">
         <Grid item>
-          Meal Search
-          <MealSearch />
+          <Typography variant="h6" id="tableTitle" component="div">
+            Meal Search
+          </Typography>
         </Grid>
+        <MealSearch />
         <Grid item>
-          <Button onClick={createMealOpen}>Create Meal</Button>
+          <Button onClick={() => createMealOpen(true)}>Create Meal</Button>
         </Grid>
       </Grid>
     </div>

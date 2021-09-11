@@ -7,15 +7,12 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import Modal from '@material-ui/core/Modal';
-import TextField from '@material-ui/core/TextField';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
 
 
 import { JAVA_API_URL, S3_BUCKET } from './Variables'
 
 export default function MealSearch(props) {
-  const [ingredientQuery, setIngredientQuery] = useState([])
+  const [Meals, setMeals] = useState([])
   const [open, setOpen] = React.useState(false);
   const [name, setName] = useState()
   const [currentIngredientImg, setCurrentIngredientImg] = useState()
@@ -95,12 +92,25 @@ export default function MealSearch(props) {
     setOpen(false);
   };
 
+  const removeMeal = (id) => {
+    console.log("Removing meai with id of " + id)
+    axios.post(`${JAVA_API_URL}/removeMeal`, { id })
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
   const renderMeals = (value) => {
+    console.log("Meal id of " + value.id)
     let fullS3Key = S3_BUCKET + "Meal/" + value.name + ".png"
     return (
-      <Card className={classes.IngredientRender}>
+      <Card className={classes.IngredientRender} key={value.id}>
         <CardHeader title={value.name} />
         <img className={classes.ingredientImagePreview} src={fullS3Key} />
+        <Button onClick={() => removeMeal(value.id)}>Remove</Button>
         <CardContent>{value.name}</CardContent>
       </Card>
     )
@@ -112,7 +122,7 @@ export default function MealSearch(props) {
       axios.post(`${JAVA_API_URL}/getMeals`, { name: event.target.value })
         .then(res => {
           console.log("search meal ", res.data)
-          setIngredientQuery(res.data)
+          setMeals(res.data)
         })
         .catch(err => {
           console.log(err)
@@ -152,18 +162,19 @@ export default function MealSearch(props) {
           <input onChange={search} type="text" id="header-search" />
           <Button>Search</Button>
         </Grid>
-        <Grid item xs={12} margin="10">
-          {ingredientQuery === null ? <div></div> :
-            ingredientQuery.map(item => {
-              return (
-                renderMeals(item)
-              )
-            })}
+        <Grid item>
+          <Grid container direction="row">
+            {Meals === null ? <div></div> :
+              Meals.map(item => {
+                return (
+                  renderMeals(item)
+                )
+              })}
+
+          </Grid>
+
         </Grid>
       </Grid>
-
-
-
     </div>
   )
 }
