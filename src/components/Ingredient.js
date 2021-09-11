@@ -67,10 +67,17 @@ export default function Ingredient() {
       url: `${JAVA_API_URL}/addingredient`,
     })
       .then(res => {
-        console.log(res)
+        //Reset Ingredient Form
+        setName("")
+        setIngredientFile("")
+        setIngredientPreview("")
+        setPreviewStyle(false)
+
+        //Popup message
+        alert("Ingredient Added")
       })
       .catch(err => {
-        console.log(err)
+        alert(err.response.data)
       })
   }
 
