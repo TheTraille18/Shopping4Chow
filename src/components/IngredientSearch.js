@@ -97,12 +97,19 @@ export default function IngredientSearch(props) {
   }));
 
   const addToMeal = (selecteds3Key, selectedIngredient) => {
-    let ingredient = { name: selectedIngredient.name, amount, unit, ingredientId: selectedIngredient.id, image: selecteds3Key }
-    setSearchIngredient("")
-    setAmount("")
-    setIngredientQuery([])
-    props.addIngredient(ingredient)
-    handleClose()
+    if (amount === undefined) {
+      alert("Enter an Amount")
+    } else if (unit === undefined) {
+      alert("Enter a Unit")
+    } else {
+      let ingredient = { name: selectedIngredient.name, amount, unit, ingredientId: selectedIngredient.id, image: selecteds3Key }
+      setSearchIngredient("")
+      setAmount("")
+      setIngredientQuery([])
+      props.addIngredient(ingredient)
+      handleClose()
+    }
+
   }
 
 
@@ -163,32 +170,32 @@ export default function IngredientSearch(props) {
             value={unit}
             onChange={handleUnit}
           >
-            <MenuItem value="None">None</MenuItem>
-            <MenuItem value="Each">Each</MenuItem>
-            <MenuItem value="Peice">Peice</MenuItem>
-            <MenuItem value="Bag">Bag</MenuItem>
-            <MenuItem value="Bottle">Bottle</MenuItem>
-            <MenuItem value="Box">Box</MenuItem>
-            <MenuItem value="Pack">Pack</MenuItem>
-            <MenuItem value="Jar">Jar</MenuItem>
-            <MenuItem value="Can">Can</MenuItem>
-            <MenuItem value="Bunch">Bunch</MenuItem>
-            <MenuItem value="Roll">Roll</MenuItem>
-            <MenuItem value="Dozen">Dozen</MenuItem>
-            <MenuItem value="Small">Small</MenuItem>
-            <MenuItem value="Large">Large</MenuItem>
-            <MenuItem value="Lbs">Lbs</MenuItem>
-            <MenuItem value="Qt">Qt</MenuItem>
-            <MenuItem value="Oz">Oz</MenuItem>
-            <MenuItem value="Cup">Cup</MenuItem>
-            <MenuItem value="Dallon">Dallon</MenuItem>
-            <MenuItem value="Tbsp">Tbsp</MenuItem>
-            <MenuItem value="Tsp">Tsp</MenuItem>
-            <MenuItem value="G">G</MenuItem>
-            <MenuItem value="Kg">Kg</MenuItem>
-            <MenuItem value="Liter">Liter</MenuItem>
-            <MenuItem value="Milliliter">Milliliter</MenuItem>
-            <MenuItem value="Pis">Pis</MenuItem>
+            <MenuItem value={0}>None</MenuItem>
+            <MenuItem value={1}>Each</MenuItem>
+            <MenuItem value={3}>Peice</MenuItem>
+            <MenuItem value={4}>Bag</MenuItem>
+            <MenuItem value={5}>Bottle</MenuItem>
+            <MenuItem value={6}>Box</MenuItem>
+            <MenuItem value={7}>Pack</MenuItem>
+            <MenuItem value={8}>Jar</MenuItem>
+            <MenuItem value={9}>Can</MenuItem>
+            <MenuItem value={10}>Bunch</MenuItem>
+            <MenuItem value={11}>Roll</MenuItem>
+            <MenuItem value={12}>Dozen</MenuItem>
+            <MenuItem value={13}>Small</MenuItem>
+            <MenuItem value={14}>Large</MenuItem>
+            <MenuItem value={15}>Lbs</MenuItem>
+            <MenuItem value={16}>Qt</MenuItem>
+            <MenuItem value={17}>Oz</MenuItem>
+            <MenuItem value={18}>Cup</MenuItem>
+            <MenuItem value={19}>Dallon</MenuItem>
+            <MenuItem value={20}>Tbsp</MenuItem>
+            <MenuItem value={21}>Tsp</MenuItem>
+            <MenuItem value={22}>G</MenuItem>
+            <MenuItem value={23}>Kg</MenuItem>
+            <MenuItem value={24}>Liter</MenuItem>
+            <MenuItem value={25}>Milliliter</MenuItem>
+            <MenuItem value={26}>Pis</MenuItem>
           </Select>
         </StyledTableCell>
         <StyledTableCell>
@@ -226,74 +233,7 @@ export default function IngredientSearch(props) {
   return (
     <div>
       <Grid container justify="center" alignItems="center" direction="column">
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-        >
-          <div className={classes.ingredientFormModal}>
-            <Grid container justify="center" alignItems="center" className={classes.addIngredientInput} direction="column">
-              <h1>{name}</h1>
-              <Grid item>
-                <img className={classes.addIngredientImagePreview} src={currentIngredientImg} />
-              </Grid>
-              <Grid item>
-                <Grid container>
-                  <Grid item>
-                    <TextField
-                      id="standard-basic"
-                      required
-                      value={amount}
-                      name="amount"
-                      label="amount"
-                      autoComplete="off"
-                      InputProps={{ className: classes.textForm }}
-                      InputLabelProps={{ className: classes.textFont }}
-                      onChange={handleQuantity}
-                    />
-                  </Grid>
-                  <Grid item>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={unit}
-                      onChange={handleUnit}
-                    >
-                      <MenuItem value="0">None</MenuItem>
-                      <MenuItem value="1">Each</MenuItem>
-                      <MenuItem value="2">Peice</MenuItem>
-                      <MenuItem value="3">Bag</MenuItem>
-                      <MenuItem value="4">Bottle</MenuItem>
-                      <MenuItem value="5">Box</MenuItem>
-                      <MenuItem value="6">Pack</MenuItem>
-                      <MenuItem value="7">Jar</MenuItem>
-                      <MenuItem value="8">Can</MenuItem>
-                      <MenuItem value="9">Bunch</MenuItem>
-                      <MenuItem value="10">Roll</MenuItem>
-                      <MenuItem value="Dozen">Dozen</MenuItem>
-                      <MenuItem value="Small">Small</MenuItem>
-                      <MenuItem value="Large">Large</MenuItem>
-                      <MenuItem value="Lbs">Lbs</MenuItem>
-                      <MenuItem value="Qt">Qt</MenuItem>
-                      <MenuItem value="Oz">Oz</MenuItem>
-                      <MenuItem value="Cup">Cup</MenuItem>
-                      <MenuItem value="Dallon">Dallon</MenuItem>
-                      <MenuItem value="Tbsp">Tbsp</MenuItem>
-                      <MenuItem value="Tsp">Tsp</MenuItem>
-                      <MenuItem value="G">G</MenuItem>
-                      <MenuItem value="Kg">Kg</MenuItem>
-                      <MenuItem value="Liter">Liter</MenuItem>
-                      <MenuItem value="Milliliter">Milliliter</MenuItem>
-                      <MenuItem value="Pis">Pis</MenuItem>
-                    </Select>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Button type="reset" onClick={addToMeal}>Add</Button>
-          </div>
-        </Modal>
+
         <Grid item>
           <input onChange={search} type="text" value={searchIngredient} id="ingredientSearch" />
           <Button>Search</Button>

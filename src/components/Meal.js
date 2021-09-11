@@ -14,6 +14,8 @@ import Typography from '@material-ui/core/Typography';
 import IngredientSearch from './IngredientSearch'
 import MealSearch from './MealSearch'
 import axios from 'axios';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import { JAVA_API_URL } from './Variables'
 
@@ -63,8 +65,8 @@ export default function Meal() {
       backgroundColor: 'white',
       position: "absolute",
       left: "35%",
-      top: "10%",
-      height: "800px",
+      top: "5%",
+      height: "850px",
       width: "700px",
       padding: '10px'
     },
@@ -78,7 +80,7 @@ export default function Meal() {
     },
     closeButton: {
       position: 'relative',
-      top: '70px'
+      top: '30px'
     }
   }));
 
@@ -98,7 +100,40 @@ export default function Meal() {
         </StyledTableCell>
         <StyledTableCell>{ingredient.name}</StyledTableCell>
         <StyledTableCell>{ingredient.amount}</StyledTableCell>
-        <StyledTableCell>{ingredient.unit}</StyledTableCell>
+        <StyledTableCell>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={ingredient.unit}
+          >
+            <MenuItem value={0}>None</MenuItem>
+            <MenuItem value={1}>Each</MenuItem>
+            <MenuItem value={3}>Peice</MenuItem>
+            <MenuItem value={4}>Bag</MenuItem>
+            <MenuItem value={5}>Bottle</MenuItem>
+            <MenuItem value={6}>Box</MenuItem>
+            <MenuItem value={7}>Pack</MenuItem>
+            <MenuItem value={8}>Jar</MenuItem>
+            <MenuItem value={9}>Can</MenuItem>
+            <MenuItem value={10}>Bunch</MenuItem>
+            <MenuItem value={11}>Roll</MenuItem>
+            <MenuItem value={12}>Dozen</MenuItem>
+            <MenuItem value={13}>Small</MenuItem>
+            <MenuItem value={14}>Large</MenuItem>
+            <MenuItem value={15}>Lbs</MenuItem>
+            <MenuItem value={16}>Qt</MenuItem>
+            <MenuItem value={17}>Oz</MenuItem>
+            <MenuItem value={18}>Cup</MenuItem>
+            <MenuItem value={19}>Dallon</MenuItem>
+            <MenuItem value={20}>Tbsp</MenuItem>
+            <MenuItem value={21}>Tsp</MenuItem>
+            <MenuItem value={22}>G</MenuItem>
+            <MenuItem value={23}>Kg</MenuItem>
+            <MenuItem value={24}>Liter</MenuItem>
+            <MenuItem value={25}>Milliliter</MenuItem>
+            <MenuItem value={26}>Pis</MenuItem>
+          </Select>
+        </StyledTableCell>
         <StyledTableCell>Remove</StyledTableCell>
       </StyledTableRow>
     )
@@ -137,6 +172,7 @@ export default function Meal() {
   }
 
   const addMeal = () => {
+    console.log("Meal Post", ingredients)
     let meal = { name, user: "DEV", recipes: ingredients, website, }
     const mealJSON = JSON.stringify(meal);
     console.log("Meal", meal)
@@ -169,14 +205,6 @@ export default function Meal() {
       .catch(err => {
         alert(err)
       })
-    // axios.post(`${JAVA_API_URL}/addmeal`, meal)
-    //   .then(res => {
-    //     console.log(res.data)
-
-    //   })
-    //   .catch(err => {
-    //     console.log(err)
-    //   })
   }
 
 
